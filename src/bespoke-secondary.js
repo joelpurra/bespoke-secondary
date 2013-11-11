@@ -50,31 +50,6 @@
         plugin = function(deck, options) {
             var off = {},
 
-                activeSlide = null,
-
-                activeSlideIndex = null,
-
-                unboundActiveSlideDeckMethods = {
-                    // TODO: break out activeSlide functionality to separate library
-                    // Plugin functions expect to be executed in a deck context
-                    enableActiveSlideListener: function() {
-                        off.saveActiveSlide = this.on("activate", unboundActiveSlideDeckMethods.saveActiveSlide.bind(this));
-                    },
-
-                    saveActiveSlide: function(e) {
-                        activeSlide = e.slide;
-                        activeSlideIndex = e.index;
-                    },
-
-                    getActiveSlide: function() {
-                        return activeSlide;
-                    },
-
-                    getActiveSlideIndex: function() {
-                        return activeSlideIndex;
-                    }
-                },
-
                 unboundSecondaryDeckMethods = {
                     // Plugin functions expect to be executed in a deck context
                     getNotesElement: function() {
@@ -151,9 +126,6 @@
                 },
 
                 registerDeckExtensions = function() {
-                    deck.getActiveSlide = unboundActiveSlideDeckMethods.getActiveSlide.bind(deck);
-                    deck.getActiveSlideIndex = unboundActiveSlideDeckMethods.getActiveSlideIndex.bind(deck);
-
                     deck.secondary = {
                         window: null,
                         secondaryWindowName: generateWindowName(),
@@ -206,8 +178,6 @@
                 },
 
                 enable = function() {
-                    unboundActiveSlideDeckMethods.enableActiveSlideListener.call(deck);
-
                     // window.addEventListener doesn't seem to work for onbeforeunload
                     window.onbeforeunload = onBeforeUnload;
 
