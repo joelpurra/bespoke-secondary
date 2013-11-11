@@ -1,41 +1,232 @@
-(function(bespoke) {
+/*global window:true, document:true, Math:true, bespoke:true */
 
-  bespoke.plugins.secondary = function(deck) {
+(function(window, document, Math, bespoke, convenient, ns, pluginName, undefined) {
+    "use strict";
 
-    /*
-      Interact with the deck
-      https://github.com/markdalgleish/bespoke.js#deck-instances
-    */
-    deck.next();
-    deck.prev();
-    deck.slide(0);
+    var cv = convenient.builder(pluginName),
 
-    /*
-       Handle events
-       https://github.com/markdalgleish/bespoke.js#events
-    */
-    deck.on('activate', function(e) {
-      console.log('Slide #' + e.index + ' was activated!', e.slide);
-    });
+        KeyConstants = {
+            // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Virtual_key_codes
+            S: 0x53, // (83) "S" key.
+        },
 
-    deck.on('deactivate', function(e) {
-      console.log('Slide #' + e.index + ' was deactivated!', e.slide);
-    });
+        defaults = {
+            notes: "aside",
+            keys: {
+                toggle: KeyConstants.S
+            }
+        },
 
-    deck.on('next', function(e) {
-      console.log('The next slide is #' + (e.index + 1), deck.slides[e.index + 1]);
-      // return false to cancel user interaction
-    });
+        randomInteger = function(from, to) {
+            // TODO: look for someone else's implementation - they've probably covered all the corner cases.
+            // This should do for 0 <= from < to < (random's resolution) though.
+            var diff;
 
-    deck.on('prev', function(e) {
-      console.log('The previous slide is #' + (e.index - 1), deck.slides[e.index - 1]);
-      // return false to cancel user interaction
-    });
+            if (to === undefined) {
+                to = from;
+                from = 0;
+            }
 
-    deck.on('slide', function(e) {
-      console.log('The requested slide is #' + e.index, e.slide);
-      // return false to cancel user interaction
-    });
-  };
+            diff = to - from;
 
-}(bespoke));
+            var rnd = from + Math.floor(Math.random() * diff);
+
+            return rnd;
+        },
+
+        baseWindowName = pluginName + "-window-",
+
+        generateWindowName = function() {
+            var rnd = randomInteger(1000, 10000),
+                windowName = baseWindowName + rnd;
+
+            return windowName;
+        },
+
+        initializeSecondaryWindowContents = function(doc) {
+            doc.body.innerHTML = "<h1>Notes</h1><div id='notes'></div>";
+        },
+
+        plugin = function(deck, options) {
+            var off = {},
+
+                activeSlide = null,
+
+                activeSlideIndex = null,
+
+                unboundActiveSlideDeckMethods = {
+                    // TODO: break out activeSlide functionality to separate library
+                    // Plugin functions expect to be executed in a deck context
+                    enableActiveSlideListener: function() {
+                        off.saveActiveSlide = this.on("activate", unboundActiveSlideDeckMethods.saveActiveSlide.bind(this));
+                    },
+
+                    saveActiveSlide: function(e) {
+                        activeSlide = e.slide;
+                        activeSlideIndex = e.index;
+                    },
+
+                    getActiveSlide: function() {
+                        return activeSlide;
+                    },
+
+                    getActiveSlideIndex: function() {
+                        return activeSlideIndex;
+                    }
+                },
+
+                unboundSecondaryDeckMethods = {
+                    // Plugin functions expect to be executed in a deck context
+                    getNotesElement: function() {
+                        return this.secondary.window && this.secondary.window.document && this.secondary.window.document.getElementById("notes");
+                    },
+
+                    isOpen: function() {
+                        var s = this.secondary,
+                            w = s.window,
+                            // isInitialized, isNotNull, isNotClosed, isOwnedByThisWindow, containsNotesElement
+                            result = (true && s !== undefined && w !== null && w.closed !== true && w.opener === window && this.secondary.getNotesElement() !== null);
+
+                        return result;
+                    },
+
+                    open: function() {
+                        if (!this.secondary.isOpen()) {
+                            (this.secondary.window = window.open());
+                            initializeSecondaryWindowContents(this.secondary.window.document);
+                        }
+
+                        return this.secondary.isOpen();
+                    },
+
+                    close: function() {
+                        if (this.secondary.isOpen()) {
+                            this.secondary.window.close();
+                        }
+
+                        return !this.secondary.isOpen();
+                    },
+
+                    focus: function() {
+                        if (this.secondary.isOpen()) {
+                            this.secondary.window.focus();
+                        }
+
+                        return this.secondary.isOpen();
+                    },
+
+                    toggle: function() {
+                        if (this.secondary.isOpen()) {
+                            this.secondary.close();
+                        } else {
+                            this.secondary.open();
+                        }
+
+                        return this.secondary.isOpen();
+                    },
+
+                    synchronize: function() {
+                        var element,
+                            slide,
+                            slideNotes,
+                            allNotes;
+
+                        if (!this.secondary.isOpen()) {
+                            return false;
+                        }
+
+                        element = this.secondary.getNotesElement();
+                        slide = this.getActiveSlide();
+
+                        slideNotes = cv.copyArray(slide.querySelectorAll(options.notes));
+
+                        allNotes = slideNotes.reduce(function(notesHtml, slideNote) {
+                            return notesHtml + slideNote.outerHTML;
+                        }, "");
+
+                        element.innerHTML = allNotes;
+
+                        return this.secondary.isOpen();
+                    }
+                },
+
+                registerDeckExtensions = function() {
+                    deck.getActiveSlide = unboundActiveSlideDeckMethods.getActiveSlide.bind(deck);
+                    deck.getActiveSlideIndex = unboundActiveSlideDeckMethods.getActiveSlideIndex.bind(deck);
+
+                    deck.secondary = {
+                        window: null,
+                        secondaryWindowName: generateWindowName(),
+                        getNotesElement: unboundSecondaryDeckMethods.getNotesElement.bind(deck),
+                        isOpen: unboundSecondaryDeckMethods.isOpen.bind(deck),
+                        open: unboundSecondaryDeckMethods.open.bind(deck),
+                        close: unboundSecondaryDeckMethods.close.bind(deck),
+                        focus: unboundSecondaryDeckMethods.focus.bind(deck),
+                        toggle: unboundSecondaryDeckMethods.toggle.bind(deck),
+                        synchronize: unboundSecondaryDeckMethods.synchronize.bind(deck)
+                    };
+                },
+
+                initOptions = function() {
+                    // TODO: merge function?
+                    // Only merge known options
+                    var merged = {};
+
+                    merged.keys = {};
+                    merged.keys.toggle = options.keys && options.keys.toggle || defaults.keys.toggle;
+
+                    merged.notes = options.notes || defaults.notes;
+
+                    options = merged;
+                },
+
+                keyDownListener = function(e) {
+                    var eventHandled = false;
+
+                    // No modifier keys, please
+                    if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+                        eventHandled = eventHandled || (e.which === options.keys.toggle && cv.fire(deck, "toggle", e) && deck.secondary.toggle() && deck.secondary.synchronize());
+                    }
+
+                    if (eventHandled) {
+                        e.preventDefault();
+                    }
+
+                    return !eventHandled;
+                },
+
+                onBeforeUnload = function() {
+                    deck.secondary.close();
+
+                    return null;
+                },
+
+                onActivate = function() {
+                    deck.secondary.synchronize();
+                },
+
+                enable = function() {
+                    unboundActiveSlideDeckMethods.enableActiveSlideListener.call(deck);
+
+                    // window.addEventListener doesn't seem to work for onbeforeunload
+                    window.onbeforeunload = onBeforeUnload;
+
+                    document.addEventListener("keydown", keyDownListener, false);
+                    off.activate = deck.on("activate", onActivate);
+                },
+
+                init = function() {
+                    initOptions();
+                    registerDeckExtensions();
+                    enable();
+                };
+
+            init();
+        };
+
+    if (ns[pluginName] !== undefined) {
+        throw cv.generateErrorObject("The " + pluginName + " plugin has already been loaded.");
+    }
+
+    ns[pluginName] = plugin;
+}(window, document, Math, bespoke, bespoke.plugins.convenient, bespoke.plugins, "secondary"));
