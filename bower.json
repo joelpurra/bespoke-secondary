@@ -1,7 +1,8 @@
 {
-  "name": "bespoke-secondary",
-  "version": "0.0.0",
-  "dependencies": {
-    "bespoke.js": ">=0.3.0"
-  }
+    "name": "bespoke-secondary",
+    "version": "0.0.0",
+    "dependencies": {
+        "bespoke.js": ">=0.3.0",
+        "bespoke-convenient": "~0.2.1"
+    }
 }
