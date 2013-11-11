@@ -37,7 +37,7 @@
             jasmine: {
                 src: ['src/**/*.js'],
                 options: {
-                    vendor: ['node_modules/bespoke/dist/bespoke.js', 'node_modules/bespoke-convenient/dist/bespoke-convenient.js'],
+                    vendor: ['node_modules/bespoke/dist/bespoke.js', 'node_modules/bespoke-convenient/dist/bespoke-convenient.js', 'node_modules/bespoke-indexfinger/dist/bespoke-indexfinger.js'],
                     specs: 'spec/*Spec.js',
                     helpers: 'spec/*Helper.js'
                 }

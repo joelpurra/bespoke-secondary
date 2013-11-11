@@ -15,6 +15,7 @@
 
                 deck = bespoke.from(parent, {
                     convenient: true,
+                    indexfinger: true,
                     secondary: true
                 });
             };
