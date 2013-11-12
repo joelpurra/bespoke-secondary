@@ -4,6 +4,6 @@
     "dependencies": {
         "bespoke.js": ">=0.3.0",
         "bespoke-convenient": "~0.2.1",
-        "bespoke-indexfinger": "~0.1.0"
+        "bespoke-indexfinger": "~0.1.1"
     }
 }

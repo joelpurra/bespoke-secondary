@@ -31,7 +31,7 @@
         "grunt-micro": "~0.1.0",
         "bespoke": ">=0.3.0",
         "bespoke-convenient": "~0.2.1",
-        "bespoke-indexfinger": "~0.1.0"
+        "bespoke-indexfinger": "~0.1.1"
     },
     "engines": {
         "node": ">=0.8.0"
