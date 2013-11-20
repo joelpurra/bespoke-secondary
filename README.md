@@ -130,3 +130,7 @@ When using bespoke-secondary, comply to the [MIT license](http://joelpurra.mit-l
 
 [bespoke.js]: https://github.com/markdalgleish/bespoke.js
 [markdalgleish]: http://markdalgleish.com/
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/joelpurra/bespoke-secondary/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
