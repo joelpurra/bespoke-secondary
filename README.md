@@ -23,8 +23,6 @@ Then, simply include the plugin when instantiating your presentation.
 
 ```js
 bespoke.horizontal.from('article', {
-  convenient: true,
-  indexfinger: true,
   secondary: true
 });
 ```
@@ -63,7 +61,6 @@ In your presentation, add some notes:
 
 ```js
 bespoke.horizontal.from('article', {
-  convenient: true,
   secondary: {
       // Change the selector used to find notes, in a .bespoke-slide context
       notes: ".my-notes",
