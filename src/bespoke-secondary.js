@@ -125,6 +125,11 @@
                     }
                 },
 
+                setupDependencies = function() {
+                    bespoke.plugins.convenient(deck, true);
+                    bespoke.plugins.indexfinger(deck, true);
+                },
+
                 registerDeckExtensions = function() {
                     deck.secondary = {
                         window: null,
@@ -186,6 +191,7 @@
                 },
 
                 init = function() {
+                    setupDependencies();
                     initOptions();
                     registerDeckExtensions();
                     enable();

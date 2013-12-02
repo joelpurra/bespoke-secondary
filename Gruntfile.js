@@ -56,7 +56,7 @@
             micro: {
                 src: '<%= uglify.dist.dest %>',
                 options: {
-                    limit: 1024,
+                    limit: 2048,
                     gzip: true
                 }
             },
