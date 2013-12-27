@@ -1,5 +1,5 @@
 /*!
- * bespoke-secondary v0.1.0
+ * bespoke-secondary v0.2.0
  * https://github.com/joelpurra/bespoke-secondary
  *
  * Copyright 2013, Joel Purra
@@ -9,7 +9,10 @@
 (function(window, document, Math, bespoke, convenient, ns, pluginName, undefined) {
     "use strict";
 
-    var cv = convenient.builder(pluginName),
+    var cv = convenient.builder({
+        pluginName: pluginName,
+        dependencies: ["indexfinger"]
+    }),
 
         KeyConstants = {
             // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Virtual_key_codes
@@ -131,11 +134,6 @@
                     }
                 },
 
-                setupDependencies = function() {
-                    bespoke.plugins.convenient(deck, true);
-                    bespoke.plugins.indexfinger(deck, true);
-                },
-
                 registerDeckExtensions = function() {
                     deck.secondary = {
                         window: null,
@@ -197,7 +195,8 @@
                 },
 
                 init = function() {
-                    setupDependencies();
+                    cv.activateDeck(deck);
+
                     initOptions();
                     registerDeckExtensions();
                     enable();
