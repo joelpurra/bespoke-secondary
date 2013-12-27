@@ -30,8 +30,8 @@
         "grunt-contrib-watch": "~0.5.3",
         "grunt-micro": "~0.1.0",
         "bespoke": ">=0.3.0",
-        "bespoke-convenient": "~0.2.1",
-        "bespoke-indexfinger": "~0.1.1"
+        "bespoke-convenient": "~0.3.0",
+        "bespoke-indexfinger": "~0.1.2"
     },
     "engines": {
         "node": ">=0.8.0"
