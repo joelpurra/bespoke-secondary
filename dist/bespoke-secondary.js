@@ -1,63 +1,76 @@
 /*!
- * bespoke-secondary v0.2.0
- * https://github.com/joelpurra/bespoke-secondary
+ * bespoke-secondary v1.0.0-alpha.1
  *
- * Copyright 2013, Joel Purra
+ * Copyright 2014, Joel Purra
  * This content is released under the MIT license
+ * http://joelpurra.mit-license.org/2013-2014
  */
 
-(function(window, document, Math, bespoke, convenient, ns, pluginName, undefined) {
-    "use strict";
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var n;"undefined"!=typeof window?n=window:"undefined"!=typeof global?n=global:"undefined"!=typeof self&&(n=self);var o=n;o=o.bespoke||(o.bespoke={}),o=o.plugins||(o.plugins={}),o.secondary=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+/*global module:true, require:true, window:true, document:true, Math:true */
 
-    var cv = convenient.builder({
-        pluginName: pluginName,
-        dependencies: ["indexfinger"]
-    }),
+"use strict";
 
-        KeyConstants = {
-            // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Virtual_key_codes
-            S: 0x53, // (83) "S" key.
-        },
+var pluginName = "secondary",
+    // Hack to get around having to write all browser code with require().
+    browserGlobal = (function(f) {
+        return f("return this")();
+    }(Function)),
+    convenient = ((browserGlobal.bespoke && browserGlobal.bespoke.plugins && browserGlobal.bespoke.plugins.convenient) || _dereq_("bespoke-convenient")),
+    cv = convenient.builder(pluginName),
 
-        defaults = {
-            notes: "aside",
-            keys: {
-                toggle: KeyConstants.S
-            }
-        },
+    // Making sure indexfinger is available.
+    // TODO: check that indexfinger has been loaded; maybe checking for deck.getActiveSlide().
+    indexfinger = ((browserGlobal.bespoke && browserGlobal.bespoke.plugins && browserGlobal.bespoke.plugins.indexfinger) || _dereq_("bespoke-indexfinger")),
 
-        randomInteger = function(from, to) {
-            // TODO: look for someone else's implementation - they've probably covered all the corner cases.
-            // This should do for 0 <= from < to < (random's resolution) though.
-            var diff;
+    KeyConstants = {
+        // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Virtual_key_codes
+        S: 0x53, // (83) "S" key.
+    },
 
-            if (to === undefined) {
-                to = from;
-                from = 0;
-            }
+    defaults = {
+        notes: "aside",
+        keys: {
+            toggle: KeyConstants.S
+        }
+    },
 
-            diff = to - from;
+    randomInteger = function(from, to) {
+        // TODO: look for someone else's implementation - they've probably covered all the corner cases.
+        // This should do for 0 <= from < to < (random's resolution) though.
+        var diff,
+            rnd;
 
-            var rnd = from + Math.floor(Math.random() * diff);
+        if (to === undefined) {
+            to = from;
+            from = 0;
+        }
 
-            return rnd;
-        },
+        diff = to - from;
 
-        baseWindowName = pluginName + "-window-",
+        rnd = from + Math.floor(Math.random() * diff);
 
-        generateWindowName = function() {
-            var rnd = randomInteger(1000, 10000),
-                windowName = baseWindowName + rnd;
+        return rnd;
+    },
 
-            return windowName;
-        },
+    baseWindowName = pluginName + "-window-",
 
-        initializeSecondaryWindowContents = function(doc) {
-            doc.body.innerHTML = "<h1>Notes</h1><div id='notes'></div>";
-        },
+    generateWindowName = function() {
+        var rnd = randomInteger(1000, 10000),
+            windowName = baseWindowName + rnd;
 
-        plugin = function(deck, options) {
-            var off = {},
+        return windowName;
+    },
+
+    initializeSecondaryWindowContents = function(doc) {
+        doc.body.innerHTML = "<h1>Notes</h1><div id='notes'></div>";
+    },
+
+    plugin = function(options) {
+        var decker = function(deck) {
+            var cvBoundToDeck = cv.activateDeck(deck),
+
+                off = {},
 
                 unboundSecondaryDeckMethods = {
                     // Plugin functions expect to be executed in a deck context
@@ -69,14 +82,14 @@
                         var s = this.secondary,
                             w = s.window,
                             // isInitialized, isNotNull, isNotClosed, isOwnedByThisWindow, containsNotesElement
-                            result = (true && s !== undefined && w !== null && w.closed !== true && w.opener === window && this.secondary.getNotesElement() !== null);
+                            result = !!(s !== undefined && w !== null && w.closed !== true && w.opener === window && this.secondary.getNotesElement() !== null);
 
                         return result;
                     },
 
                     open: function() {
                         if (!this.secondary.isOpen()) {
-                            (this.secondary.window = window.open());
+                            this.secondary.window = window.open();
                             initializeSecondaryWindowContents(this.secondary.window.document);
                         }
 
@@ -122,7 +135,7 @@
                         element = this.secondary.getNotesElement();
                         slide = this.getActiveSlide();
 
-                        slideNotes = cv.copyArray(slide.querySelectorAll(options.notes));
+                        slideNotes = convenient.copyArray(slide.querySelectorAll(options.notes));
 
                         allNotes = slideNotes.reduce(function(notesHtml, slideNote) {
                             return notesHtml + slideNote.outerHTML;
@@ -153,8 +166,10 @@
                     // Only merge known options
                     var merged = {};
 
+                    options = options || {};
+
                     merged.keys = {};
-                    merged.keys.toggle = options.keys && options.keys.toggle || defaults.keys.toggle;
+                    merged.keys.toggle = (options.keys && options.keys.toggle) || defaults.keys.toggle;
 
                     merged.notes = options.notes || defaults.notes;
 
@@ -166,7 +181,7 @@
 
                     // No modifier keys, please
                     if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-                        eventHandled = eventHandled || (e.which === options.keys.toggle && cv.fire(deck, "toggle", e) && deck.secondary.toggle() && deck.secondary.synchronize());
+                        eventHandled = eventHandled || (e.which === options.keys.toggle && cvBoundToDeck.fire("toggle", e) && deck.secondary.toggle() && deck.secondary.synchronize());
                     }
 
                     if (eventHandled) {
@@ -195,8 +210,6 @@
                 },
 
                 init = function() {
-                    cv.activateDeck(deck);
-
                     initOptions();
                     registerDeckExtensions();
                     enable();
@@ -205,9 +218,76 @@
             init();
         };
 
-    if (ns[pluginName] !== undefined) {
-        throw cv.generateErrorObject("The " + pluginName + " plugin has already been loaded.");
-    }
+        return decker;
+    };
 
-    ns[pluginName] = plugin;
-}(window, document, Math, bespoke, bespoke.plugins.convenient, bespoke.plugins, "secondary"));
+module.exports = plugin;
+
+},{"bespoke-indexfinger":2}],2:[function(_dereq_,module,exports){
+/*global module:true, require:true */
+
+"use strict";
+
+var pluginName = "indexfinger",
+    // Hack to get around having to write all browser code with require().
+    browserGlobal = (function(f) {
+        return f("return this")();
+    }(Function)),
+    convenient = ((browserGlobal.bespoke && browserGlobal.bespoke.plugins && browserGlobal.bespoke.plugins.convenient) || _dereq_("bespoke-convenient")),
+    cv = convenient.builder(pluginName),
+
+    plugin = function(options) {
+        var decker = function(deck) {
+            var cvBoundToDeck = cv.activateDeck(deck),
+
+                off = {},
+
+                activeSlide = null,
+
+                activeSlideIndex = -1,
+
+                unboundActiveSlideDeckMethods = {
+                    // Plugin functions expect to be executed in a deck context
+                    enableActiveSlideListener: function() {
+                        off.saveActiveSlide = this.on("activate", unboundActiveSlideDeckMethods.saveActiveSlide.bind(this));
+                    },
+
+                    saveActiveSlide: function(e) {
+                        activeSlide = e.slide;
+                        activeSlideIndex = e.index;
+                    },
+
+                    getActiveSlide: function() {
+                        return activeSlide;
+                    },
+
+                    getActiveSlideIndex: function() {
+                        return activeSlideIndex;
+                    }
+                },
+
+                registerDeckExtensions = function() {
+                    deck.getActiveSlide = unboundActiveSlideDeckMethods.getActiveSlide.bind(deck);
+                    deck.getActiveSlideIndex = unboundActiveSlideDeckMethods.getActiveSlideIndex.bind(deck);
+                },
+
+                enable = function() {
+                    unboundActiveSlideDeckMethods.enableActiveSlideListener.call(deck);
+                },
+
+                init = function() {
+                    registerDeckExtensions();
+                    enable();
+                };
+
+            init();
+        };
+
+        return decker;
+    };
+
+module.exports = plugin;
+
+},{}]},{},[1])
+(1)
+});

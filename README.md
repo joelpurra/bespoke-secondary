@@ -1,8 +1,8 @@
-[![Build Status](https://secure.travis-ci.org/joelpurra/bespoke-secondary.png?branch=master)](https://travis-ci.org/joelpurra/bespoke-secondary)
+[![Build Status](https://secure.travis-ci.org/joelpurra/bespoke-secondary.png?branch=master)](https://travis-ci.org/joelpurra/bespoke-secondary) [![Coverage Status](https://coveralls.io/repos/joelpurra/bespoke-secondary/badge.png)](https://coveralls.io/r/joelpurra/bespoke-secondary)
 
 # bespoke-secondary
 
-Show slide notes in a secondary window/screen with [Bespoke.js][bespoke.js]
+Show slide notes in a secondary window/screen with [Bespoke.js](http://markdalgleish.com/projects/bespoke.js)
 
 ## Download
 
@@ -17,14 +17,25 @@ When you've followed the instructions below, load your presentation and hit the 
 
 ### Scripts
 
-First, include `bespoke.js`, `bespoke-convenient.js`, `bespoke-indexfinger.js` and `bespoke-jumpy.js` in your page.
+This plugin is shipped in a [UMD format](https://github.com/umdjs/umd), meaning that it is available as a CommonJS/AMD module or browser global.
 
-Then, simply include the plugin when instantiating your presentation.
+For example, when using CommonJS modules:
 
 ```js
-bespoke.horizontal.from('article', {
-  secondary: true
-});
+var bespoke = require('bespoke'),
+  secondary = require('bespoke-secondary');
+
+bespoke.from('#presentation', [
+  secondary()
+]);
+```
+
+When using browser globals:
+
+```js
+bespoke.from('#presentation', [
+  bespoke.plugins.secondary()
+]);
 ```
 
 ### HTML
@@ -75,25 +86,16 @@ bespoke.horizontal.from('article', {
 
 ## Package managers
 
-### Bower
-
-```bash
-$ bower install bespoke-secondary
-```
-
 ### npm
 
 ```bash
 $ npm install bespoke-secondary
 ```
 
-The bespoke-secondary npm package is designed for use with [browserify](http://browserify.org/), e.g.
+### Bower
 
-```js
-require('bespoke');
-require('bespoke-convenient');
-require('bespoke-indexfinger');
-require('bespoke-secondary');
+```bash
+$ bower install bespoke-secondary
 ```
 
 
@@ -121,13 +123,9 @@ My bestest friends, [bespoke-convenient](https://github.com/joelpurra/bespoke-co
 
 ## License
 
-Copyright (c) 2013, [Joel Purra](http://joelpurra.com/) All rights reserved.
+Copyright (c) 2013, 2014, [Joel Purra](http://joelpurra.com/) All rights reserved.
 
-When using bespoke-secondary, comply to the [MIT license](http://joelpurra.mit-license.org/2013). Please see the LICENSE file for details, and the [MIT License on Wikipedia](http://en.wikipedia.org/wiki/MIT_License).
+When using bespoke-secondary, comply to the [MIT license](http://joelpurra.mit-license.org/2013-2014). Please see the LICENSE file for details, and the [MIT License on Wikipedia](http://en.wikipedia.org/wiki/MIT_License).
 
 [bespoke.js]: https://github.com/markdalgleish/bespoke.js
 [markdalgleish]: http://markdalgleish.com/
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/joelpurra/bespoke-secondary/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

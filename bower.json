@@ -1,9 +1,12 @@
 {
     "name": "bespoke-secondary",
-    "version": "0.2.0",
+    "version": "1.0.0-alpha.1",
+    "main": "./dist/bespoke-secondary.js",
+    "ignore": [
+        "**/.*"
+    ],
     "dependencies": {
-        "bespoke.js": ">=0.3.0",
-        "bespoke-convenient": "~0.3.0",
-        "bespoke-indexfinger": "~0.1.2"
+        "bespoke.js": "^1.0.0",
+        "bespoke-convenient": "^1.0.0"
     }
 }

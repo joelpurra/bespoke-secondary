@@ -1,18 +1,18 @@
 <!doctype html>
 <html>
 
-<head>
+  <head>
     <meta name="viewport" content="width=device-width" />
     <title>bespoke-secondary demo</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
-</head>
+  </head>
 
-<body>
+  <body>
 
     <h1>bespoke-secondary</h1>
 
     <article>
-        <section>
+      <section>
             <h2>Slide 1</h2>
             <p>Why don't you hit the
                 <kbd>S</kbd>
@@ -20,8 +20,8 @@
             <aside>
                 <p>Awesome, you made it to our secret party!</p>
             </aside>
-        </section>
-        <section>
+      </section>
+      <section>
             <h2>Slide 2</h2>
             <p>Do you see a new tab/window, by any chance? That's where the magic happens.</p>
             <aside>
@@ -32,8 +32,8 @@
                     <li>You know. Whatever.</li>
                 </ol>
             </aside>
-        </section>
-        <section>
+      </section>
+      <section>
             <h2>Slide 3</h2>
             <p>This presesentation window is made for projectors, so people can see and read this text.</p>
             <aside>
@@ -50,15 +50,15 @@
                     <li>It would be nice to control the primary screen from here too.</li>
                 </ol>
             </aside>
-        </section>
-        <section>
+      </section>
+      <section>
             <h2>Slide 4</h2>
             <p>These slides are soooo pretty!</p>
             <aside>
                 <p>The secondary screen isn't as pretty - yet! Please help me patch bespoke-secondary, perhaps by pulling in a super simple template of some sort.</p>
             </aside>
-        </section>
-        <section>
+      </section>
+      <section>
             <h2>Slide 5</h2>
             <p>That's it, really. I was bored, and wanted to create a bespoke.js plugin. Enjoy!</p>
             <p><a href="https://github.com/joelpurra/bespoke-secondary" target="_blank">https://github.com/joelpurra/bespoke-secondary</a>
@@ -70,14 +70,17 @@
                 <p>You should check out <a href="https://github.com/markdalgleish/bespoke-remote-prototype">bespoke-remote prototype</a>, by <a href="http://markdalgleish.com/">Mark Dalgleish</a>, who created <a href="http://markdalgleish.com/projects/bespoke.js/">Bespoke.js</a>. It also has support for notes, and an unlimited number of screens - but it requires server side software for synchronization.</p>
                 <p>The notes from bespoke-secondary should be compatible with bespoke-remote prototype, so go ahead!</p>
             </aside>
-        </section>
+      </section>
     </article>
 
-    <script src="../bower_components/bespoke.js/dist/bespoke.js"></script>
-    <script src="../bower_components/bespoke-convenient/dist/bespoke-convenient.js"></script>
-    <script src="../bower_components/bespoke-indexfinger/dist/bespoke-indexfinger.js"></script>
-    <script src="../src/bespoke-secondary.js"></script>
+    <script src="../node_modules/bespoke/dist/bespoke.js"></script>
+    <script src="../node_modules/bespoke-keys/dist/bespoke-keys.js"></script>
+    <script src="../node_modules/bespoke-touch/dist/bespoke-touch.js"></script>
+    <script src="../node_modules/bespoke-classes/dist/bespoke-classes.js"></script>
+    <script src="../node_modules/bespoke-convenient/dist/bespoke-convenient.js"></script>
+    <script src="../node_modules/bespoke-indexfinger/dist/bespoke-indexfinger.js"></script>
+    <script src="../dist/bespoke-secondary.js"></script>
     <script src="demo.js"></script>
-</body>
+  </body>
 
 </html>
