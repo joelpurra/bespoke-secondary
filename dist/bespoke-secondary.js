@@ -1,5 +1,5 @@
 /*!
- * bespoke-secondary v1.0.0-alpha.1
+ * bespoke-secondary v1.0.0
  *
  * Copyright 2014, Joel Purra
  * This content is released under the MIT license

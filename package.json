@@ -1,6 +1,6 @@
 {
     "name": "bespoke-secondary",
-    "version": "1.0.0-alpha.1",
+    "version": "1.0.0",
     "description": "Show slide notes in a secondary window/screen with Bespoke.js",
     "homepage": "https://github.com/joelpurra/bespoke-secondary",
     "bugs": "https://github.com/joelpurra/bespoke-secondary/issues",
