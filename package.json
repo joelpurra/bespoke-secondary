@@ -1,6 +1,6 @@
 {
     "name": "bespoke-secondary",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Show slide notes in a secondary window/screen with Bespoke.js",
     "homepage": "https://github.com/joelpurra/bespoke-secondary",
     "bugs": "https://github.com/joelpurra/bespoke-secondary/issues",
@@ -47,7 +47,9 @@
         "lodash": "^2.4.1",
         "vinyl-buffer": "0.0.0",
         "vinyl-map": "^1.0.1",
-        "vinyl-source-stream": "^0.1.1"
+        "vinyl-source-stream": "^0.1.1",
+        "bespoke-convenient": "^1.0.0",
+        "bespoke-indexfinger": "^1.0.0"
     },
     "engines": {
         "node": ">=0.10.0"
