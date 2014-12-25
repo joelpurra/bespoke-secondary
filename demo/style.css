@@ -1,0 +1,83 @@
+body {
+    font-family: helvetica, arial, sans-serif;
+    font-size: 24px;
+    line-height: 36px;
+    background: url("3264857348_0cfd8d7e4f_b-lowquality.jpg");
+    background-position: top center;
+    background-size: cover;
+    background-repeat: none;
+    overflow: hidden;
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: #303030;
+}
+h1 {
+    height: 25px;
+    width: 640px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -322px;
+    margin-top: -290px;
+    font-size: 32px;
+    letter-spacing: -1px;
+    text-shadow: rgba(255, 255, 255, 0.6) 0 0 8px;
+    z-index: 1;
+}
+section {
+    display: none;
+}
+.bespoke-parent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.bespoke-slide {
+    width: 640px;
+    height: 480px;
+    position: absolute;
+    top: 50%;
+    margin-top: -240px;
+    left: 50%;
+    margin-left: -320px;
+}
+section.bespoke-slide {
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    display: block;
+    border-radius: 0.5em;
+    padding: 1em;
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.40) 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(100%, rgba(255, 255, 255, 0.40)));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.40) 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.40) 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.40) 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.40) 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#40ffffff', GradientType=0);
+    /* IE6-9 */
+}
+.bespoke-inactive {
+    opacity: 0;
+    top: 100%;
+}
+.bespoke-active {
+    opacity: 1;
+}
+.bespoke-slide aside {
+    display: none;
+}
