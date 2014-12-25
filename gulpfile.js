@@ -15,10 +15,12 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     path = require('path'),
-    template = require('lodash').template;
+    template = require('lodash').template,
+    deployGHPages = require('gulp-gh-pages');
 
 gulp.task('default', ['clean', 'lint', 'test', 'compile']);
 gulp.task('dev', ['compile', 'lint', 'test', 'watch']);
+gulp.task('deploy', ['deploy-gh-pages']);
 
 gulp.task('watch', function() {
     gulp.watch('lib/**/*.js', ['test', 'lint', 'compile']);
@@ -86,4 +88,60 @@ gulp.task('compile', ['clean'], function() {
             '<%= licenses[0].type %> License */\n'
         ].join(''), pkg)))
         .pipe(gulp.dest('dist'));
+});
+
+gulp.task('deploy-gh-pages', function() {
+    function isBespokePlugin(name) {
+        return (name.match(/^bespoke\b/));
+    }
+
+    function getBespokePlugins(packagesObject) {
+        var packages = Object.keys(packagesObject),
+            bespokePlugins = packages.filter(isBespokePlugin);
+
+        return bespokePlugins;
+    }
+
+    function unique() {
+        var arrays = Array.prototype.slice.call(arguments),
+            all = {},
+            unique;
+
+        arrays.forEach(function(array) {
+            array.forEach(function(name) {
+                all[name] = (all[name] || 0) + 1;
+            });
+        });
+
+        unique = Object.keys(all);
+
+        return unique;
+    }
+
+    function getBespokePluginPath(name) {
+        return './node_modules/' + name + '/dist/' + name + '.js';
+    }
+
+    function getAllBespokePluginPaths() {
+        var plugins = unique(
+                getBespokePlugins(pkg.peerDependencies || {}),
+                getBespokePlugins(pkg.devDependencies || {}),
+                getBespokePlugins(pkg.dependencies || {})
+            ),
+            paths = plugins.map(getBespokePluginPath);
+
+        return paths;
+    }
+
+    var ghFiles = [
+        './dist/*',
+        './demo/*',
+    ].concat(getAllBespokePluginPaths());
+
+    return gulp.src(ghFiles, {
+            base: './'
+        })
+        .pipe(deployGHPages({
+            force: true
+        }));
 });

@@ -1,6 +1,8 @@
 [![Build Status](https://secure.travis-ci.org/joelpurra/bespoke-secondary.png?branch=master)](https://travis-ci.org/joelpurra/bespoke-secondary) [![Coverage Status](https://coveralls.io/repos/joelpurra/bespoke-secondary/badge.png)](https://coveralls.io/r/joelpurra/bespoke-secondary)
 
-# bespoke-secondary
+# [bespoke-secondary](https://github.com/joelpurra/bespoke-secondary)
+
+**Check out the [presentation/demo.](https://joelpurra.github.io/bespoke-secondary/demo/)**
 
 Show slide notes in a secondary window/screen with [Bespoke.js](http://markdalgleish.com/projects/bespoke.js)
 
