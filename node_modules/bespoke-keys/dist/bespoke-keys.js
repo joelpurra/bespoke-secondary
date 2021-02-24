@@ -1,7 +1,7 @@
 /*!
  * bespoke-keys v1.0.0
  *
- * Copyright 2014, Mark Dalgleish
+ * Copyright 2015, Mark Dalgleish
  * This content is released under the MIT license
  * http://mit-license.org/markdalgleish
  */
@@ -13,12 +13,13 @@ module.exports = function(options) {
 
     document.addEventListener('keydown', function(e) {
       if (e.which == 34 || // PAGE DOWN
-        e.which == 32 || // SPACE
+        (e.which == 32 && !e.shiftKey) || // SPACE WITHOUT SHIFT
         (isHorizontal && e.which == 39) || // RIGHT
         (!isHorizontal && e.which == 40) // DOWN
       ) { deck.next(); }
 
       if (e.which == 33 || // PAGE UP
+        (e.which == 32 && e.shiftKey) || // SPACE + SHIFT
         (isHorizontal && e.which == 37) || // LEFT
         (!isHorizontal && e.which == 38) // UP
       ) { deck.prev(); }
