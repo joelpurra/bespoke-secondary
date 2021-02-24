@@ -6,7 +6,7 @@
     "bugs": "https://github.com/joelpurra/bespoke-secondary/issues",
     "author": {
         "name": "Joel Purra",
-        "url": "http://joelpurra.com/"
+        "url": "https://joelpurra.com/"
     },
     "main": "./lib/bespoke-secondary.js",
     "repository": {
@@ -55,10 +55,12 @@
     "engines": {
         "node": ">=0.10.0"
     },
-    "licenses": [{
-        "type": "MIT",
-        "url": "http://joelpurra.mit-license.org/2013-2014"
-    }],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://joelpurra.mit-license.org/2013-2014"
+        }
+    ],
     "keywords": [
         "bespoke-plugin"
     ]

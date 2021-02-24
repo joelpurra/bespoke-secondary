@@ -7,7 +7,7 @@ Please don't edit files in the `dist` subdirectory as they are generated via [gu
 Regarding code style like indentation and whitespace, **follow the conventions you see used in the source already.**
 
 ## Modifying the code
-First, ensure that you have the latest [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/) installed.
+First, ensure that you have the latest [Node.js](https://nodejs.org/) and [npm](https://npmjs.org/) installed.
 
 Test that gulp is installed globally by running `gulp --version` at the command-line.  If gulp isn't installed globally, run `npm install -g gulp` to install the latest version.
 

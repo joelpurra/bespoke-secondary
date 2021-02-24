@@ -4,7 +4,7 @@
 
 **Check out the [presentation/demo.](https://joelpurra.github.io/bespoke-secondary/demo/)**
 
-Show slide notes in a secondary window/screen with [Bespoke.js](http://markdalgleish.com/projects/bespoke.js)
+Show slide notes in a secondary window/screen with [Bespoke.js](https://markdalgleish.com/projects/bespoke.js)
 
 ## Download
 
@@ -125,9 +125,9 @@ My bestest friends, [bespoke-convenient](https://github.com/joelpurra/bespoke-co
 
 ## License
 
-Copyright (c) 2013, 2014, [Joel Purra](http://joelpurra.com/) All rights reserved.
+Copyright (c) 2013, 2014, [Joel Purra](https://joelpurra.com/) All rights reserved.
 
-When using bespoke-secondary, comply to the [MIT license](http://joelpurra.mit-license.org/2013-2014). Please see the LICENSE file for details, and the [MIT License on Wikipedia](http://en.wikipedia.org/wiki/MIT_License).
+When using bespoke-secondary, comply to the [MIT license](https://joelpurra.mit-license.org/2013-2014). Please see the LICENSE file for details, and the [MIT License on Wikipedia](https://en.wikipedia.org/wiki/MIT_License).
 
 [bespoke.js]: https://github.com/markdalgleish/bespoke.js
-[markdalgleish]: http://markdalgleish.com/
+[markdalgleish]: https://markdalgleish.com/
