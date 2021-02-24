@@ -1,7 +1,7 @@
 /*!
  * bespoke-secondary v1.0.1
  *
- * Copyright 2014, Joel Purra
+ * Copyright 2021, Joel Purra
  * This content is released under the MIT license
  * https://joelpurra.mit-license.org/2013-2014
  */
