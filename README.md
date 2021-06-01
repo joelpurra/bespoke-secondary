@@ -6,6 +6,14 @@
 
 Show slide notes in a secondary window/screen with [Bespoke.js](https://markdalgleish.com/projects/bespoke.js)
 
+
+
+> ## ⚠️ This project has been archived
+>
+> No future updates are planned. Feel free to continue using it, but expect no support.
+
+
+
 ## Download
 
 Download the [production version][min] or the [development version][max], or use a [package manager](#package-managers).
